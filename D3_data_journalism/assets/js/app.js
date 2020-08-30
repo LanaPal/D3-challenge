@@ -1,7 +1,7 @@
 // @TODO: YOUR CODE HERE!
 //setting up the chart parameters
 const svgWidth = 800;
-const svgHeight = 400;
+const svgHeight = 600;
 
 const margin = {
   top: 20,
@@ -32,7 +32,6 @@ const chartGroup = svg.append("g")
       healthData.forEach(function (data) {
           data.age =+data.age;
           data.smokes =+data.smokes;
-          data.abbr =+data.abbr;
       });
 
     //creating scaling function
@@ -56,7 +55,7 @@ const chartGroup = svg.append("g")
       chartGroup.append("g")
         .call(leftAxis);
 
-    //creating circles
+      //creating circles
     const circlesGroup = chartGroup.selectAll("circle")
     .data(healthData)
     .enter()
@@ -65,9 +64,36 @@ const chartGroup = svg.append("g")
     .attr("cy", d => yLinearScale(d.smokes))
     .attr("r", "15")
     .attr("fill", "blue")
-    .text(function(d){return d.age},"yellow")
     .attr("opacity", ".5");
 
+    const textLabels = chartGroup.selectAll(null).data(healthData).enter().append("text");
+    //have to use the wisdom of internet (stuck overflow discussion) to figure out the "null part!")
+    //needed to avoid binding data to already existing elements
+    textLabels
+      .attr("x", d => xLinearScale(d.age))
+      .attr("y", d => yLinearScale(d.smokes))
+      .text(d => d.abbr)  
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "10px")
+      .attr("text-anchor", "middle")
+      .attr("fill", "azure");
+
+    //append the labels to the circles
+    chartGroup.append("text")
+
+
+
+
+    //   .data(healthData).enter().append("text")
+    //   .attr("x", function(d) {
+    //     return d.x;
+    //   })
+    //   .attr("y", function(d) {
+    //     return d.y;
+    //   })
+    //       .text(healthData, d => d.abbr);
+
+      
     //create labels
     // Create axes labels
   chartGroup.append("text")
