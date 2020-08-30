@@ -81,11 +81,10 @@ const chartGroup = svg.append("g")
 
     //append the labels to the circles
     chartGroup.append("text")
-
       
-  //create labels
+  //create labels (x and y)
     // Create axes labels
-  chartGroup.append("text")
+chartGroup.append("text")
   .attr("transform", "rotate(-90)")
   .attr("y", 0 - margin.left + 40)
   .attr("x", 0 - (height / 2))
@@ -98,6 +97,29 @@ chartGroup.append("text")
   .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
   .attr("class", "axisText")
   .text("Smokes");
+
+  //fancy part 1. toolTip
+  //initializing the Tooltip
+  const toolTip = d3.tip()
+  .attr("class", "d3-tip")
+  .offset([80, -60])
+  .html(function (d) {
+    return (`${d.state}<br>Age: ${d.age}<br>Smokes: ${d.smokes}`);
+  });
+
+  //creating Tooltip in the chart
+  circlesGroup.call(toolTip);
+
+  //create the event listeners to display and hide the Tooltip
+  circlesGroup.on("mouseover", function (data) {
+    toolTip.show(data);
+  })
+  //onmouse event
+    .on("mouseout", function (data, index) {
+      toolTip.hide(data);
+    });
+    return circlesGroup;
+
 }}).catch(function (error) {
 console.log(error);
 });
