@@ -63,9 +63,10 @@ const chartGroup = svg.append("g")
     .attr("cx", d => xLinearScale(d.age))
     .attr("cy", d => yLinearScale(d.smokes))
     .attr("r", "15")
-    .attr("fill", "blue")
+    .attr("fill", "teal")
     .attr("opacity", ".5");
 
+    //creating circle labels
     const textLabels = chartGroup.selectAll(null).data(healthData).enter().append("text");
     //have to use the wisdom of internet (stuck overflow discussion) to figure out the "null part!")
     //needed to avoid binding data to already existing elements
@@ -81,20 +82,8 @@ const chartGroup = svg.append("g")
     //append the labels to the circles
     chartGroup.append("text")
 
-
-
-
-    //   .data(healthData).enter().append("text")
-    //   .attr("x", function(d) {
-    //     return d.x;
-    //   })
-    //   .attr("y", function(d) {
-    //     return d.y;
-    //   })
-    //       .text(healthData, d => d.abbr);
-
       
-    //create labels
+  //create labels
     // Create axes labels
   chartGroup.append("text")
   .attr("transform", "rotate(-90)")
